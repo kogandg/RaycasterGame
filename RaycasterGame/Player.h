@@ -5,6 +5,7 @@
 #include <math.h>
 #include <iomanip>
 #include "Helpers.h"
+#include "Map.h"
 
 
 using namespace Helpers;
@@ -25,7 +26,7 @@ public:
 	Player(int x = 0, int y = 0, float moveSpeed = 1.5f, float rotateSpeed = 0.05f);
 
 	void draw(int width, int height);
-	void update(GLFWwindow* window);
+	void update(GLFWwindow* window, Map* map);
 
 	void displayData();
 };

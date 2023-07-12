@@ -50,3 +50,30 @@ void Map::draw(int windowWidth, int windowHeight)
 		}
 	}
 }
+
+bool Map::validPosition(int xPos, int yPos)
+{
+	int x0;
+	int y0;
+	int x1; 
+	int y1;
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			if (map[(y * width) + x] == 1)
+			{
+				x0 = x * squareSize;
+				y0 = y * squareSize;
+				x1 = x0 + squareSize;
+				y1 = y0 + squareSize;
+
+				if (x0 <= xPos && x1 >= xPos && y0 <= yPos && y1 >= yPos)
+				{
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}

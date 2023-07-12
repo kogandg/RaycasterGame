@@ -29,9 +29,9 @@ void Player::draw(int width, int height)
 	glEnd();
 }
 
-void Player::update(GLFWwindow* window)
+void Player::update(GLFWwindow* window, Map* map)
 {
-	if (glfwGetKey(window, GLFW_KEY_W) != GLFW_RELEASE)
+	if (glfwGetKey(window, GLFW_KEY_W) != GLFW_RELEASE && map->validPosition(xPosition + deltaX, yPosition + deltaY))
 	{
 		xPosition += deltaX;
 		yPosition += deltaY;
@@ -46,7 +46,7 @@ void Player::update(GLFWwindow* window)
 		deltaX = cos(angle) * movementSpeed;
 		deltaY = sin(angle) * movementSpeed;
 	}
-	if (glfwGetKey(window, GLFW_KEY_S) != GLFW_RELEASE)
+	if (glfwGetKey(window, GLFW_KEY_S) != GLFW_RELEASE && map->validPosition(xPosition - deltaX, yPosition - deltaY))
 	{
 		xPosition -= deltaX;
 		yPosition -= deltaY;

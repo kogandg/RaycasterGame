@@ -20,5 +20,7 @@ public:
 	Map();
 
 	void draw(int windowWidth, int windowHeight);
+
+	bool validPosition(int x, int y);
 };
 

@@ -25,7 +25,7 @@ void init(GLFWwindow* window)
 
 void update(GLFWwindow* window)
 {
-	player->update(window);
+	player->update(window, map);
 }
 
 void draw(GLFWwindow* window)
