@@ -8,4 +8,9 @@ namespace Helpers
 		float yf = -(((y / (float)height) * 2) - 1);//1 is top, -1 is bottom
 		glVertex2f(xf, yf);
 	}
+
+	float distance(float ax, float ay, float bx, float by)
+	{
+		return sqrt((bx-ax)* (bx - ax) + (by-ay)* (by - ay));
+	}
 }

@@ -12,6 +12,13 @@ Player::Player(int x, int y, float moveSpeed, float rotateSpeed)
 	deltaY = sin(angle) * movementSpeed;
 }
 
+//float length = 20;
+//float lengthSpeed = 0.01;
+//float calcFactor(float desiredLength, float x, float y)
+//{
+//	return desiredLength / (sqrt(x*x + y*y));
+//}
+
 void Player::draw(int width, int height)
 {
 	glPointSize(8);//need to set point size before begin
@@ -25,7 +32,11 @@ void Player::draw(int width, int height)
 
 	glBegin(GL_LINES);
 	vertexInt(xPosition, yPosition, width, height);
-	vertexInt(xPosition + deltaX * 10, yPosition + deltaY * 10, width, height);
+
+	float fac = 26.6;//calcFactor(length, deltaX, deltaY);
+	//cout << fac << " " << length << endl;
+
+	vertexInt(xPosition + deltaX * fac, yPosition + deltaY * fac, width, height);
 	glEnd();
 }
 
@@ -61,6 +72,15 @@ void Player::update(GLFWwindow* window, Map* map)
 		deltaX = cos(angle) * movementSpeed;
 		deltaY = sin(angle) * movementSpeed;
 	}
+
+	/*if (glfwGetKey(window, GLFW_KEY_UP) != GLFW_RELEASE)
+	{
+		length += lengthSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN) != GLFW_RELEASE)
+	{
+		length -= lengthSpeed;
+	}*/
 }
 
 void Player::displayData()
