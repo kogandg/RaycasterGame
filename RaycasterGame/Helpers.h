@@ -6,4 +6,5 @@
 namespace Helpers
 {
 	void vertexInt(int x, int y, int width, int height);
+	const double PI = std::atan(1.0) * 4;
 }

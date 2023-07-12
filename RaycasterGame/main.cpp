@@ -3,6 +3,7 @@
 
 #include "Helpers.h"
 #include "Player.h"
+#include "Map.h"
 
 using namespace std;
 using namespace Helpers;
@@ -11,6 +12,16 @@ int windowWidth = 1024;
 int windowHeight = 512;
 
 Player* player;
+Map* map;
+
+void init(GLFWwindow* window)
+{
+	glClearColor(0.3, 0.3, 0.3, 0);
+	glfwSetWindowSize(window, windowWidth, windowHeight);
+
+	player = new Player(300, 300);
+	map = new Map();
+}
 
 void update(GLFWwindow* window)
 {
@@ -19,21 +30,20 @@ void update(GLFWwindow* window)
 
 void draw(GLFWwindow* window)
 {
-
 	glClearColor(0.3, 0.3, 0.3, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	map->draw(windowWidth, windowHeight);
 	player->draw(windowWidth, windowHeight);
 	glfwSwapBuffers(window);
 }
 
-void init(GLFWwindow* window)
+void displayUtil()//since it clears the screen every update, its impossible to read
 {
-	glClearColor(0.3, 0.3, 0.3, 0);
-	glfwSetWindowSize(window, windowWidth, windowHeight);
-
-	player = new Player(300, 300, 1.5f);
+	std::cout << "\x1B[2J\x1B[H";//clears the screen
+	player->displayData();
 }
+
+
 
 int main(void)
 {
@@ -51,7 +61,6 @@ int main(void)
 		cout << "Failed window creation";
 		return -1;
 	}
-
 
 	init(window);
 
