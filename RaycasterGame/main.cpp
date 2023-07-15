@@ -14,6 +14,7 @@ int windowHeight = 512;
 
 int screenWidth = 160;
 int screenHeight = 320;
+int screenHeightOffset = 50;
 
 Player* player;
 Map* map;
@@ -40,7 +41,7 @@ void drawRays()
 	float vertiY;
 	float finalDist;
 
-	rayAngle = player->angle - DEG*30;
+	rayAngle = player->Angle - DEG * 30;
 	if (rayAngle < 0)
 	{
 		rayAngle += 2 * PI;
@@ -54,30 +55,30 @@ void drawRays()
 	{
 		//check horizontal lines
 		distH = numeric_limits<float>::max();
-		horiX = player->xPosition;
-		horiY = player->yPosition;
+		horiX = player->Position.X;
+		horiY = player->Position.Y;
 
 		depthOfField = 0;
 		float aTan = -1 / tan(rayAngle);
 
 		if (rayAngle > PI)//ray looking up
 		{
-			rayYPos = (((int)player->yPosition / 64) * 64) - 0.0001;//rounding to nearest 64bit and subtract for accuracy
-			rayXPos = (player->yPosition - rayYPos) * aTan + player->xPosition;
+			rayYPos = (((int)player->Position.Y / 64) * 64) - 0.0001;//rounding to nearest 64bit and subtract for accuracy
+			rayXPos = (player->Position.Y - rayYPos) * aTan + player->Position.X;
 			yOffset = -64;
 			xOffset = -yOffset * aTan;
 		}
 		if (rayAngle < PI)//ray looking down
 		{
-			rayYPos = (((int)player->yPosition / 64) * 64) +64;//rounding to nearest 64bit
-			rayXPos = (player->yPosition - rayYPos) * aTan + player->xPosition;
+			rayYPos = (((int)player->Position.Y / 64) * 64) + 64;//rounding to nearest 64bit
+			rayXPos = (player->Position.Y - rayYPos) * aTan + player->Position.X;
 			yOffset = 64;
 			xOffset = -yOffset * aTan;
 		}
 		if (rayAngle == 0 || rayAngle == PI)//looking exactly left or right
 		{
-			rayXPos = player->xPosition;
-			rayYPos = player->yPosition;
+			rayXPos = player->Position.X;
+			rayYPos = player->Position.Y;
 			depthOfField = 8;
 		}
 
@@ -90,12 +91,12 @@ void drawRays()
 			if (mapIndex >= 0 && mapIndex < map->map.size() && map->map[mapIndex] == 1)//wall
 			{
 				depthOfField = 8;
-				
+
 				horiX = rayXPos;
 				horiY = rayYPos;
-				distH = distance(player->xPosition, player->yPosition, horiX, horiY);
+				distH = distance(player->Position.X, player->Position.Y, horiX, horiY);
 			}
-			else 
+			else
 			{
 				rayXPos += xOffset;
 				rayYPos += yOffset;
@@ -107,30 +108,30 @@ void drawRays()
 
 		//check vertical lines
 		distV = numeric_limits<float>::max();
-		vertiX = player->xPosition;
-		vertiY = player->yPosition;
+		vertiX = player->Position.X;
+		vertiY = player->Position.Y;
 
 		depthOfField = 0;
 		float nTan = -tan(rayAngle);
 
 		if (rayAngle > P2 && rayAngle < P3)//ray looking left
 		{
-			rayXPos = (((int)player->xPosition / 64) * 64) - 0.0001;//rounding to nearest 64bit and subtract for accuracy
-			rayYPos = (player->xPosition - rayXPos) * nTan + player->yPosition;
+			rayXPos = (((int)player->Position.X / 64) * 64) - 0.0001;//rounding to nearest 64bit and subtract for accuracy
+			rayYPos = (player->Position.X - rayXPos) * nTan + player->Position.Y;
 			xOffset = -64;
 			yOffset = -xOffset * nTan;
 		}
 		if (rayAngle < P2 || rayAngle > P3)//ray looking right
 		{
-			rayXPos = (((int)player->xPosition / 64) * 64) + 64;//rounding to nearest 64bit
-			rayYPos = (player->xPosition - rayXPos) * nTan + player->yPosition;
+			rayXPos = (((int)player->Position.X / 64) * 64) + 64;//rounding to nearest 64bit
+			rayYPos = (player->Position.X - rayXPos) * nTan + player->Position.Y;
 			xOffset = 64;
 			yOffset = -xOffset * nTan;
 		}
 		if (rayAngle == P2 || rayAngle == P3)//looking exactly up or down
 		{
-			rayXPos = player->xPosition;
-			rayYPos = player->yPosition;
+			rayXPos = player->Position.X;
+			rayYPos = player->Position.Y;
 			depthOfField = 8;
 		}
 
@@ -146,7 +147,7 @@ void drawRays()
 
 				vertiX = rayXPos;
 				vertiY = rayYPos;
-				distV = distance(player->xPosition, player->yPosition, vertiX, vertiY);
+				distV = distance(player->Position.X, player->Position.Y, vertiX, vertiY);
 			}
 			else
 			{
@@ -174,16 +175,16 @@ void drawRays()
 		}
 
 		//draw current ray
-		
+
 		glLineWidth(1);
 		glBegin(GL_LINES);
-		vertexInt(player->xPosition, player->yPosition, windowWidth, windowHeight);
+		vertexInt(player->Position.X, player->Position.Y, windowWidth, windowHeight);
 		vertexInt(rayXPos, rayYPos, windowWidth, windowHeight);
 		glEnd();
 
 
 		//draw 3d walls
-		float cosAngle = player->angle - rayAngle;
+		float cosAngle = player->Angle - rayAngle;
 		if (cosAngle < 0)
 		{
 			cosAngle += 2 * PI;
@@ -195,17 +196,30 @@ void drawRays()
 		finalDist *= cos(cosAngle);//fixes fisheye look
 
 		float lineHeight = (map->squareSize * screenHeight) / finalDist;
-		
+
 		if (lineHeight > 320)
 		{
 			lineHeight = 320;
 		}
-		float lineOffset = screenHeight - lineHeight / 2;
+		float lineOffset = ((screenHeight - lineHeight) / 2)+ screenHeightOffset;
 
 		glLineWidth(8);
 		glBegin(GL_LINES);
-		vertexInt(r*8 + 530, lineOffset, windowWidth, windowHeight);
-		vertexInt(r * 8 + 530, lineHeight+lineOffset, windowWidth, windowHeight);
+		vertexInt(r * 8 + 530, lineOffset, windowWidth, windowHeight);
+		vertexInt(r * 8 + 530, lineHeight + lineOffset, windowWidth, windowHeight);
+		glEnd();
+
+		glBegin(GL_LINES);
+		glColor3f(0.2, 0.2, 0.2);
+		//vertexInt(530, screenHeight, windowWidth, windowHeight);
+		//vertexInt(530+screenWidth, screenHeight, windowWidth, windowHeight);
+
+		vertexInt(r * 8 + 530, lineHeight + lineOffset, windowWidth, windowHeight);
+		vertexInt(r * 8 + 530, screenHeight+screenHeightOffset, windowWidth, windowHeight);
+
+		glColor3f(0.4, 0.4, 0.4);
+		vertexInt(r * 8 + 530, screenHeightOffset, windowWidth, windowHeight);
+		vertexInt(r * 8 + 530, lineOffset, windowWidth, windowHeight);
 		glEnd();
 
 		//increase angle
@@ -243,8 +257,8 @@ void draw(GLFWwindow* window)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	map->draw(windowWidth, windowHeight);
 	drawRays();
-	player->draw(windowWidth, windowHeight);
-	
+	player->Draw(windowWidth, windowHeight);
+
 	glfwSwapBuffers(window);
 }
 

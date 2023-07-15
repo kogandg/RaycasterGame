@@ -6,6 +6,7 @@
 #include <iomanip>
 #include "Helpers.h"
 #include "Map.h"
+#include "Vector2.h"
 
 
 using namespace Helpers;
@@ -14,18 +15,17 @@ using namespace std;
 class Player
 {
 public: 
-	float xPosition;
-	float yPosition;
-	float movementSpeed;
-	float rotationSpeed;
+	Vector2 Position;
+	float MovementSpeed;
+	float RotationSpeed;
 	
-	float deltaY;
-	float deltaX;
-	float angle;
+	Vector2 Delta;
+	float Angle;
+	
+	Player(Vector2 position = Vector2::Zero(), float movementSpeed = 1.5f, float rotationSpeed = 0.05f);
+	Player(int x = 0, int y = 0, float movementSpeed = 1.5f, float rotationSpeed = 0.05f);
 
-	Player(int x = 0, int y = 0, float moveSpeed = 1.5f, float rotateSpeed = 0.05f);
-
-	void draw(int width, int height);
+	void Draw(int width, int height);
 	void update(GLFWwindow* window, Map* map);
 
 	void displayData();
