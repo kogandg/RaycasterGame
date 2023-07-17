@@ -242,7 +242,7 @@ void Game::calcRays()
 			finalDist = distH;
 		}
 
-		Ray ray = Ray(player->Position, Vector2(rayXPos, rayYPos) - player->Position);
+		Ray ray = Ray(player->Position, Vector2(rayXPos, rayYPos));
 		rays[r] = ray;
 
 		//increase angle
