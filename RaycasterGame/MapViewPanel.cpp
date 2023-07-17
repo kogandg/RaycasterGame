@@ -28,7 +28,7 @@ void MapViewPanel::drawRays(int width, int height)
 	{
 		glLineWidth(1);
 		glBegin(GL_LINES);
-		vertexInt(ray.Position.X, ray.Position.Y, width, height);
+		vertexInt(player.Position.X, player.Position.Y, width, height);
 		vertexInt(ray.RayVector.X, ray.RayVector.Y, width, height);
 		glEnd();
 	}
