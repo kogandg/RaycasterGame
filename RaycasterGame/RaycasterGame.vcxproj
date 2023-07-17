@@ -140,6 +140,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapViewPanel.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerViewPanel.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
@@ -150,6 +151,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapViewPanel.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerViewPanel.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
