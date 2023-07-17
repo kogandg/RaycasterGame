@@ -13,4 +13,5 @@ namespace Helpers
 	const double DEG = std::atan(1.0) / 45;
 
 	float distance(float ax, float ay, float bx, float by);
+	void normalizeAngle(float &angle);
 }

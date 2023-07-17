@@ -1,5 +1,6 @@
 #include "Vector2.h"
 
+
 Vector2::Vector2(float x, float y)
 {
 	X = x;
@@ -33,6 +34,34 @@ Vector2 Vector2::UnitX()
 Vector2 Vector2::UnitY()
 {
 	return Vector2(0, 1);
+}
+
+float Vector2::Angle()
+{
+	float angle = atan2(Y, X);
+	normalizeAngle(angle);
+	return angle;
+}
+
+float Vector2::Length()
+{
+	return sqrt(X * X + Y * Y);
+}
+
+void Vector2::RoundX(float round)
+{
+	X = (X / round) * round;
+}
+
+void Vector2::RoundY(float round)
+{
+	Y = (Y / round) * round;
+}
+
+void Vector2::Round(float round)
+{
+	RoundY(round);
+	RoundX(round);
 }
 
 Vector2 Vector2::operator+(const Vector2& obj)

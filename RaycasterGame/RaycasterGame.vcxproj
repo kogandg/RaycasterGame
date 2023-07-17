@@ -133,16 +133,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Helpers.cpp" />
+    <ClCompile Include="IPanel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapViewPanel.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="IPanel.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="MapViewPanel.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

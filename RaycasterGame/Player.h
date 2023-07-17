@@ -4,6 +4,7 @@
 #include <iostream>
 #include <math.h>
 #include <iomanip>
+#include <functional>
 #include "Helpers.h"
 #include "Map.h"
 #include "Vector2.h"
@@ -19,15 +20,18 @@ public:
 	float MovementSpeed;
 	float RotationSpeed;
 	
-	Vector2 Delta;
 	float Angle;
 	
 	Player(Vector2 position = Vector2::Zero(), float movementSpeed = 1.5f, float rotationSpeed = 0.05f);
-	Player(int x = 0, int y = 0, float movementSpeed = 1.5f, float rotationSpeed = 0.05f);
+	//Player(int x = 0, int y = 0, float movementSpeed = 1.5f, float rotationSpeed = 0.05f);
 
 	void Draw(int width, int height);
-	void update(GLFWwindow* window, Map* map);
+	void update(GLFWwindow* window, function<bool(float, float)> validatePosition);//bool (*validatePosition) (float, float));//, Map* map);
+	//void update(GLFWwindow* window, Map* map);
 
 	void displayData();
+
+private:
+	Vector2 delta;
 };
 

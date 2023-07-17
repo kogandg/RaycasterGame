@@ -1,4 +1,7 @@
 #pragma once
+#include <math.h>
+#include "Helpers.h"
+using namespace Helpers;
 class Vector2
 {
 public:
@@ -13,6 +16,17 @@ public:
 	static Vector2 One();
 	static Vector2 UnitX();
 	static Vector2 UnitY();
+
+	float Angle();
+	float Length();
+
+	void RoundX(float round);
+	void RoundY(float round);
+	void Round(float round);
+
+	void RoundXInt(int round);
+	void RoundYInt(int round);
+	void RoundInt(int round);
 
 	Vector2 operator+(const Vector2& obj);
 	Vector2 operator-(const Vector2& obj);

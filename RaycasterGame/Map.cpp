@@ -51,7 +51,7 @@ void Map::draw(int windowWidth, int windowHeight)
 	}
 }
 
-bool Map::validPosition(int xPos, int yPos)
+bool Map::validPosition(float xPos, float yPos)
 {
 	int x0;
 	int y0;

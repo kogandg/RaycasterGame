@@ -7,10 +7,10 @@ Player::Player(Vector2 position, float movementSpeed, float rotationSpeed)
 	RotationSpeed = rotationSpeed;
 
 	Angle = 0;
-	Delta = Vector2(cos(Angle) * movementSpeed, sin(Angle) * movementSpeed);
+	delta = Vector2(cos(Angle) * movementSpeed, sin(Angle) * movementSpeed);
 }
 
-Player::Player(int x, int y, float movementSpeed, float rotationSpeed) : Player(Vector2(x, y), movementSpeed, rotationSpeed) { }
+//Player::Player(int x, int y, float movementSpeed, float rotationSpeed) : Player(Vector2(x, y), movementSpeed, rotationSpeed) { }
 
 //float length = 20;
 //float lengthSpeed = 0.01;
@@ -36,15 +36,15 @@ void Player::Draw(int width, int height)
 	float fac = 26.6;//calcFactor(length, deltaX, deltaY);
 	//cout << fac << " " << length << endl;
 
-	vertexInt(Position.X + Delta.X * fac, Position.Y + Delta.Y * fac, width, height);
+	vertexInt(Position.X + delta.X * fac, Position.Y + delta.Y * fac, width, height);
 	glEnd();
 }
 
-void Player::update(GLFWwindow* window, Map* map)
+void Player::update(GLFWwindow* window, function<bool(float, float)> validatePosition)//bool (*validatePosition) (float, float))//Map* map)
 {
-	if (glfwGetKey(window, GLFW_KEY_W) != GLFW_RELEASE && map->validPosition(Position.X + Delta.X, Position.Y + Delta.Y))
+	if (glfwGetKey(window, GLFW_KEY_W) != GLFW_RELEASE && validatePosition(Position.X + delta.X, Position.Y + delta.Y))//map->validPosition(Position.X + delta.X, Position.Y + delta.Y))
 	{
-		Position += Delta;
+		Position += delta;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) != GLFW_RELEASE)
 	{
@@ -54,12 +54,12 @@ void Player::update(GLFWwindow* window, Map* map)
 			Angle += 2 * PI;
 		}
 		
-		Delta.X = cos(Angle) * MovementSpeed;
-		Delta.Y = sin(Angle) * MovementSpeed;
+		delta.X = cos(Angle) * MovementSpeed;
+		delta.Y = sin(Angle) * MovementSpeed;
 	}
-	if (glfwGetKey(window, GLFW_KEY_S) != GLFW_RELEASE && map->validPosition(Position.X - Delta.X, Position.Y - Delta.Y))
+	if (glfwGetKey(window, GLFW_KEY_S) != GLFW_RELEASE && validatePosition(Position.X - delta.X, Position.Y - delta.Y))//map->validPosition(Position.X - delta.X, Position.Y - delta.Y))
 	{
-		Position -= Delta;
+		Position -= delta;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) != GLFW_RELEASE)
 	{
@@ -69,8 +69,8 @@ void Player::update(GLFWwindow* window, Map* map)
 			Angle -= 2 * PI;
 		}
 
-		Delta.X = cos(Angle) * MovementSpeed;
-		Delta.Y = sin(Angle) * MovementSpeed;
+		delta.X = cos(Angle) * MovementSpeed;
+		delta.Y = sin(Angle) * MovementSpeed;
 	}
 
 	/*if (glfwGetKey(window, GLFW_KEY_UP) != GLFW_RELEASE)
@@ -91,6 +91,6 @@ void Player::displayData()
 	cout << "Player y: " << Position.Y << endl;
 
 	cout << "Player angle: " << Angle << endl;
-	cout << "Player deltaX: " << Delta.X << endl;
-	cout << "Player deltaY: " << Delta.Y << endl;
+	cout << "Player deltaX: " << delta.X << endl;
+	cout << "Player deltaY: " << delta.Y << endl;
 }

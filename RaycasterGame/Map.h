@@ -21,6 +21,6 @@ public:
 
 	void draw(int windowWidth, int windowHeight);
 
-	bool validPosition(int x, int y);
+	bool validPosition(float xPos, float yPos);
 };
 
