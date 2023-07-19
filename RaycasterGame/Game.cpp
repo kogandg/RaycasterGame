@@ -6,8 +6,8 @@ Game::Game()
 	map = new Map();
 
 
-	mapViewPanel = new MapViewPanel(Vector2(100, 100), Vector2(300, 300), Vector2(512, 512));
-	playerViewPanel = new PlayerViewPanel(Vector2(0, 0), Vector2(256, 512), Vector2(160, 320));
+	mapViewPanel = new MapViewPanel(Vector2(0, 0), Vector2(150, 150), Vector2(512, 512));
+	playerViewPanel = new PlayerViewPanel(Vector2(0, 0), Vector2(1024, 512), Vector2(320, 160));
 
 	panels = { mapViewPanel, playerViewPanel };
 
@@ -37,7 +37,9 @@ void Game::Draw(GLFWwindow* window)
 	{
 		panel->Draw(window);
 	}*/
+
 	playerViewPanel->Draw(window);
+	mapViewPanel->Draw(window);
 }
 
 void Game::Update(GLFWwindow* window)
