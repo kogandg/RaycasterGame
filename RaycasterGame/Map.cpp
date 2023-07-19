@@ -18,10 +18,10 @@ Map::Map()
 	squareSize = 64;
 }
 
-void Map::draw(int windowWidth, int windowHeight)
+void Map::draw(function<void(Vector2)> makeVertex)//int windowWidth, int windowHeight)
 {
-	int x0;
-	int y0;
+	//map background : glClearColor(0.3, 0.3, 0.3, 0);
+	Vector2 position;
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
@@ -34,15 +34,20 @@ void Map::draw(int windowWidth, int windowHeight)
 			{
 				glColor3f(0, 0, 0);
 			}
-			x0 = x * squareSize;
-			y0 = y * squareSize;
+			position.X = x * squareSize;
+			position.Y = y * squareSize;
 
 			glBegin(GL_QUADS);
 
-			vertexInt(x0+1, y0+1, windowWidth, windowHeight);
+			makeVertex(Vector2(position.X+1, position.Y+1));
+			makeVertex(Vector2(position.X + 1, position.Y + squareSize - 1));
+			makeVertex(Vector2(position.X + squareSize - 1, position.Y + squareSize - 1));
+			makeVertex(Vector2(position.X + squareSize - 1, position.Y + 1));
+
+			/*vertexInt(x0+1, y0+1, windowWidth, windowHeight);
 			vertexInt(x0+1, y0+squareSize-1, windowWidth, windowHeight);
 			vertexInt(x0 + squareSize-1, y0 + squareSize-1, windowWidth, windowHeight);
-			vertexInt(x0 + squareSize-1, y0+1, windowWidth, windowHeight);
+			vertexInt(x0 + squareSize-1, y0+1, windowWidth, windowHeight);*/
 
 
 			glEnd();

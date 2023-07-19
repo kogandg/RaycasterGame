@@ -24,10 +24,6 @@ public:
 	void RoundY(float round);
 	void Round(float round);
 
-	void RoundXInt(int round);
-	void RoundYInt(int round);
-	void RoundInt(int round);
-
 	Vector2 operator+(const Vector2& obj);
 	Vector2 operator-(const Vector2& obj);
 	Vector2 operator*(const Vector2& obj);

@@ -6,7 +6,7 @@
 class PlayerViewPanel : public IPanel
 {
 public:
-	PlayerViewPanel();
+	PlayerViewPanel(Vector2 position, Vector2 size, Vector2 internalSize);
 	void Draw(GLFWwindow* window) override;
 	void GetInformation(Player p, Map m, vector<Ray> r);
 private:

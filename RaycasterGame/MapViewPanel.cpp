@@ -1,8 +1,8 @@
 #include "MapViewPanel.h"
 
-MapViewPanel::MapViewPanel()
+MapViewPanel::MapViewPanel(Vector2 position, Vector2 size, Vector2 internalSize) : IPanel(position, size, internalSize) 
 {
-	//player = Player(Ve, 0, 0);
+
 }
 
 void MapViewPanel::Draw(GLFWwindow* window)
@@ -10,9 +10,9 @@ void MapViewPanel::Draw(GLFWwindow* window)
 	int width;
 	int height;
 	glfwGetWindowSize(window, &width, &height);
-	map.draw(width, height);
+	map.draw(getMakeVertex());//[&](Vector2 position) -> void { makeVertex(position); });//width, height);
 	drawRays(width, height);
-	player.Draw(width, height);
+	player.Draw(getMakeVertex());//[&](Vector2 position) -> void { makeVertex(position); });//width, height);
 }
 
 void MapViewPanel::GetInformation(Player p, Map m, vector<Ray> r)
@@ -24,12 +24,17 @@ void MapViewPanel::GetInformation(Player p, Map m, vector<Ray> r)
 
 void MapViewPanel::drawRays(int width, int height)
 {
+	glLineWidth(1);
+	glColor3f(0.3, 0.3, 0.3);
 	for (Ray ray : rays)
 	{
-		glLineWidth(1);
+		
 		glBegin(GL_LINES);
-		vertexInt(player.Position.X, player.Position.Y, width, height);
-		vertexInt(ray.RayVector.X, ray.RayVector.Y, width, height);
+		
+		makeVertex(player.Position);
+		makeVertex(ray.RayVector);
+		//vertexInt(player.Position.X, player.Position.Y, width, height);
+		//vertexInt(ray.RayVector.X, ray.RayVector.Y, width, height);
 		glEnd();
 	}
 }

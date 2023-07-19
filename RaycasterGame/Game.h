@@ -6,6 +6,7 @@
 #include "Ray.h"
 #include "IPanel.h"
 #include "MapViewPanel.h"
+#include "PlayerViewPanel.h"
 
 using namespace std;
 using namespace Helpers;
@@ -31,8 +32,10 @@ private:
 	int fov;//in degrees
 	int numRays;//horizontal resolution
 
+
 	MapViewPanel* mapViewPanel;
-	
+	PlayerViewPanel* playerViewPanel;
+
 	void calcRays();
 	void drawRays();
 };

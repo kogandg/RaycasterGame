@@ -14,4 +14,6 @@ namespace Helpers
 
 	float distance(float ax, float ay, float bx, float by);
 	void normalizeAngle(float &angle);
+
+	
 }

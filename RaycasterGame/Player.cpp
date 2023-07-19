@@ -19,24 +19,26 @@ Player::Player(Vector2 position, float movementSpeed, float rotationSpeed)
 //	return desiredLength / (sqrt(x*x + y*y));
 //}
 
-void Player::Draw(int width, int height)
+void Player::Draw(function<void(Vector2)> makeVertex)// int width, int height)
 {
 	glPointSize(8);//need to set point size before begin
 	glColor3f(1, 1, 0);
 
 	glBegin(GL_POINTS);
-	vertexInt(Position.X, Position.Y, width, height);
+	makeVertex(Position);
+	//vertexInt(Position.X, Position.Y, width, height);
 	glEnd();
 
 	glLineWidth(3);
 
 	glBegin(GL_LINES);
-	vertexInt(Position.X, Position.Y, width, height);
+	makeVertex(Position);
+	//vertexInt(Position.X, Position.Y, width, height);
 
 	float fac = 26.6;//calcFactor(length, deltaX, deltaY);
 	//cout << fac << " " << length << endl;
-
-	vertexInt(Position.X + delta.X * fac, Position.Y + delta.Y * fac, width, height);
+	makeVertex(Position + delta * fac);
+	//vertexInt(Position.X + delta.X * fac, Position.Y + delta.Y * fac, width, height);
 	glEnd();
 }
 

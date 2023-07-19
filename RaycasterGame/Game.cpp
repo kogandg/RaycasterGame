@@ -5,9 +5,11 @@ Game::Game()
 	player = new Player(Vector2(300, 300), 0.75, 0.015);
 	map = new Map();
 
-	mapViewPanel = new MapViewPanel;
 
-	panels = { mapViewPanel };
+	mapViewPanel = new MapViewPanel(Vector2(100, 100), Vector2(300, 300), Vector2(512, 512));
+	playerViewPanel = new PlayerViewPanel(Vector2(530, 50), Vector2(160, 320), Vector2(160, 320));
+
+	panels = { mapViewPanel, playerViewPanel };
 
 	fov = 60;
 	numRays = 60;
@@ -42,6 +44,7 @@ void Game::Update(GLFWwindow* window)
 	player->update(window, [&](float x, float y) -> bool {return map->validPosition(x, y); });
 	calcRays();
 	mapViewPanel->GetInformation(*player, *map, rays);
+	playerViewPanel->GetInformation(*player, *map, rays);
 }
 
 void Game::calcRays()
