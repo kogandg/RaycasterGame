@@ -25,7 +25,7 @@ void MapViewPanel::GetInformation(Player p, Map m, vector<Ray> r)
 void MapViewPanel::drawRays(int width, int height)
 {
 	glLineWidth(1);
-	glColor3f(0.3, 0.3, 0.3);
+	glColor3f(0.5, 0.5, 0.5);
 	for (Ray ray : rays)
 	{
 		

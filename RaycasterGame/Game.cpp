@@ -7,7 +7,7 @@ Game::Game()
 
 
 	mapViewPanel = new MapViewPanel(Vector2(100, 100), Vector2(300, 300), Vector2(512, 512));
-	playerViewPanel = new PlayerViewPanel(Vector2(530, 50), Vector2(160, 320), Vector2(160, 320));
+	playerViewPanel = new PlayerViewPanel(Vector2(0, 0), Vector2(256, 512), Vector2(160, 320));
 
 	panels = { mapViewPanel, playerViewPanel };
 
@@ -33,10 +33,11 @@ vector<Ray> Game::getRays()
 
 void Game::Draw(GLFWwindow* window)
 {
-	for (auto panel : panels)
+	/*for (auto panel : panels)
 	{
 		panel->Draw(window);
-	}
+	}*/
+	playerViewPanel->Draw(window);
 }
 
 void Game::Update(GLFWwindow* window)
