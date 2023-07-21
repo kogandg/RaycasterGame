@@ -13,6 +13,7 @@ namespace Helpers
 	{
 		return sqrt((bx-ax)* (bx - ax) + (by-ay)* (by - ay));
 	}
+
 	void normalizeAngle(float &angle)
 	{
 		if (angle < 0)

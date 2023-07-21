@@ -26,11 +26,11 @@ void PlayerViewPanel::drawRays(int width, int height)
 	for (int r = 0; r < rays.size(); r++)
 	{
 		Ray ray = rays[r];
-		float rayAngle = Vector2(ray.RayVector - player.Position).Angle();
-		float cosAngle = player.Angle - rayAngle;
+		float rayAngle = ray.Angle() - player.Angle;
+		float cosAngle = rayAngle;
 		normalizeAngle(cosAngle);
 
-		float finalDist = distance(player.Position.X, player.Position.Y, ray.RayVector.X, ray.RayVector.Y) * cos(cosAngle);//fixes fisheye look
+		float finalDist = ray.Length() * cos(cosAngle);//fixes fisheye look
 
 		float lineHeight = (map.squareSize * internalSize.Y) / finalDist;
 
@@ -39,6 +39,7 @@ void PlayerViewPanel::drawRays(int width, int height)
 		{
 			lineHeight = internalSize.Y;
 		}
+
 		float lineOffset = ((internalSize.Y - lineHeight) / 2);
 
 		glBegin(GL_QUADS);

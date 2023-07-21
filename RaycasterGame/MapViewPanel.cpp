@@ -31,8 +31,8 @@ void MapViewPanel::drawRays(int width, int height)
 		
 		glBegin(GL_LINES);
 		
-		makeVertex(player.Position);
-		makeVertex(ray.RayVector);
+		makeVertex(ray.Position);
+		makeVertex(ray.End);
 		//vertexInt(player.Position.X, player.Position.Y, width, height);
 		//vertexInt(ray.RayVector.X, ray.RayVector.Y, width, height);
 		glEnd();

@@ -39,16 +39,32 @@ void Map::draw(function<void(Vector2)> makeVertex)//int windowWidth, int windowH
 
 			glBegin(GL_QUADS);
 
-			makeVertex(Vector2(position.X+1, position.Y+1));
-			makeVertex(Vector2(position.X + 1, position.Y + squareSize - 1));
-			makeVertex(Vector2(position.X + squareSize - 1, position.Y + squareSize - 1));
-			makeVertex(Vector2(position.X + squareSize - 1, position.Y + 1));
+			makeVertex(Vector2(position.X, position.Y));
+			makeVertex(Vector2(position.X, position.Y + squareSize));
+			makeVertex(Vector2(position.X + squareSize, position.Y + squareSize));
+			makeVertex(Vector2(position.X + squareSize, position.Y));
 
-			/*vertexInt(x0+1, y0+1, windowWidth, windowHeight);
-			vertexInt(x0+1, y0+squareSize-1, windowWidth, windowHeight);
-			vertexInt(x0 + squareSize-1, y0 + squareSize-1, windowWidth, windowHeight);
-			vertexInt(x0 + squareSize-1, y0+1, windowWidth, windowHeight);*/
+			glEnd();
 
+			glLineWidth(1);
+			glColor3f(0.3, 0.3, 0.3);
+			glBegin(GL_LINES);
+
+			//top line
+			makeVertex(position);
+			makeVertex(Vector2(position.X+ squareSize, position.Y));
+
+			//bottom line
+			makeVertex(Vector2(position.X, position.Y + squareSize));
+			makeVertex(position + squareSize);
+
+			//left line
+			makeVertex(position);
+			makeVertex(Vector2(position.X, position.Y + squareSize));
+
+			//right line
+			makeVertex(Vector2(position.X + squareSize, position.Y));
+			makeVertex(position + squareSize);
 
 			glEnd();
 
@@ -60,7 +76,7 @@ bool Map::validPosition(float xPos, float yPos)
 {
 	int x0;
 	int y0;
-	int x1; 
+	int x1;
 	int y1;
 	for (int y = 0; y < height; y++)
 	{

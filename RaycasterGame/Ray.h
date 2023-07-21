@@ -4,17 +4,15 @@ class Ray
 {
 public:
 	Vector2 Position;
-	Vector2 RayVector;	
+	Vector2 End;
 	
-	
-	Ray(Vector2 position, float rayX, float rayY);
-	Ray(float rayX, float rayY);
-	Ray(Vector2 position, Vector2 ray); 
-	Ray(Vector2 ray);
+	Ray(Vector2 position, Vector2 end);
+	Ray(Vector2 position, float endX, float endY);
+	Ray(Vector2 position);
 	Ray();
 
+	Vector2 Vector();
 	float Angle();
 	float Length();
-	Vector2 RayEnd();
 };
 
