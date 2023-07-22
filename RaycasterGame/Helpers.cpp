@@ -25,4 +25,11 @@ namespace Helpers
 			angle -= 2 * PI;
 		}
 	}
+
+	int readInt(unsigned char data[], int start)
+	{
+		unsigned int num;
+		num = data[start] + (data[start + 1] << 8) + (data[start + 2] << 16) + (data[start + 3] << 24);
+		return num;
+	}
 }

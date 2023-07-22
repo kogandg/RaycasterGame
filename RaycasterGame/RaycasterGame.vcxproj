@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="IPanel.cpp" />
@@ -142,9 +143,11 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerViewPanel.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Helpers.h" />
     <ClInclude Include="IPanel.h" />
@@ -153,7 +156,11 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerViewPanel.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="Texture2D.h" />
     <ClInclude Include="Vector2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bitMap.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

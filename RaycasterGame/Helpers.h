@@ -15,5 +15,5 @@ namespace Helpers
 	float distance(float ax, float ay, float bx, float by);
 	void normalizeAngle(float &angle);
 
-	
+	int readInt(unsigned char data[], int start);
 }

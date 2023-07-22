@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Ray.h"
+#include "Texture2D.h"
 class PlayerViewPanel : public IPanel
 {
 public:
@@ -13,6 +14,7 @@ private:
 	Player player;
 	Map map;
 	vector<Ray> rays;
+	Texture2D wallTexture;
 
 	void drawRays(int width, int height);
 };
