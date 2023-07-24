@@ -23,6 +23,7 @@ void PlayerViewPanel::GetInformation(Player p, Map m, vector<Ray> r)
 void PlayerViewPanel::drawRays(int width, int height)
 {
 	float lineWidth = internalSize.X / rays.size();
+
 	for (int r = 0; r < rays.size(); r++)
 	{
 		Ray ray = rays[r];
@@ -32,111 +33,183 @@ void PlayerViewPanel::drawRays(int width, int height)
 
 		float finalDist = ray.Length() * cos(cosAngle);//fixes fisheye look
 
-		float lineHeight = (map.squareSize * internalSize.Y) / finalDist;
+		float lineHeight = internalSize.Y * map.squareSize / finalDist;
 
-		
-		if (lineHeight > internalSize.Y)
+		float lineOffsetFromZero = (lineHeight - internalSize.Y) / 2;
+
+		float yPerTexturePixel = lineHeight / wallTexture.Size.Y;
+
+		int textureYStartOffSet = lineOffsetFromZero / yPerTexturePixel;
+
+		if (textureYStartOffSet > (wallTexture.Size.Y / 2)-1)
 		{
-			lineHeight = internalSize.Y;
+			cout << endl;
 		}
 
-		float lineOffset = ((internalSize.Y - lineHeight) / 2);
-
-		//Vector2 mapPos = Vector2((int)(ray.End.X) / map.squareSize, (int)(ray.End.Y) / map.squareSize);
-		
-		/*float textureYStep = wallTexture.Size.Y / lineHeight;
-		float screenY = 0;
-		float yStep = textureYStep * wallTexture.Size.Y;*/
-
-		float yStep = lineHeight / wallTexture.Size.Y;
-
-		
-		for (int textY = 0; textY < 1/*wallTexture.Size.Y*/; textY++)
+		if (textureYStartOffSet < 0)
 		{
-			glColor3f(1, 0, 0);
-			glBegin(GL_QUADS);
-			makeVertex(r * lineWidth, lineOffset + textY*yStep);
-			makeVertex(r * lineWidth + lineWidth, lineOffset + textY * yStep);
+			textureYStartOffSet = 0;
+		}
 
-			makeVertex(r * lineWidth, lineOffset + textY * yStep + yStep);
-			makeVertex(r * lineWidth + lineWidth, lineOffset + textY * yStep + yStep);
+
+		int wallX;
+		if (ray.HitVertical)
+		{
+			wallX = (int)(ray.End.Y) % map.squareSize;
+		}
+		else
+		{
+			wallX = (int)(ray.End.X) % map.squareSize;
+		}
+
+		float xPerTexturePixel = map.squareSize/wallTexture.Size.X;
+
+		for (int textY = textureYStartOffSet; textY < wallTexture.Size.Y - textureYStartOffSet; textY++)
+		{
+			float yStart = yPerTexturePixel * textY - lineOffsetFromZero;
+			float yEnd = yPerTexturePixel * (textY + 1) - lineOffsetFromZero;
+
+			
+
+			Color color = wallTexture.GetPixel(Vector2(wallX/xPerTexturePixel, textY));
+
+			glColor3f(color.R, color.G, color.B);
+
+			glBegin(GL_TRIANGLES);
+			makeVertex(r * lineWidth, yStart);
+			makeVertex(r * lineWidth + lineWidth, yStart);
+			makeVertex(r * lineWidth, yEnd);
+
+
+			makeVertex(r * lineWidth, yEnd);
+			makeVertex(r * lineWidth + lineWidth, yEnd);
+			makeVertex(r * lineWidth + lineWidth, yStart);
 			glEnd();
 		}
+
 		
-		/*while (screenY < lineHeight + yStep)
-		{
-			glColor3f(1, 0, 0);
 
-			makeVertex(r * lineWidth, lineOffset + screenY);
-			makeVertex(r * lineWidth + lineWidth, lineOffset + screenY);
 
-			makeVertex(r * lineWidth, lineOffset + screenY + yStep);
-			makeVertex(r * lineWidth + lineWidth, lineOffset + screenY + yStep);
+		cout << endl;
 
-			textureY += textureYStep;
-			screenY += yStep;
-		}
-		glEnd();*/
+		//oldStuff
 
-		//for (int y = 0; y < lineHeight; y++)
+		//float lineHeight = (map.squareSize * internalSize.Y) / finalDist;
+
+
+		//float yStep = lineHeight / wallTexture.Size.Y;
+		//float yOff = 0;
+
+
+		//if (lineHeight > internalSize.Y)
 		//{
-		//	//Color color = wallTexture.GetPixel(Vector2(textureY, 0));
-		//	//walls
-		//	glColor3f(1, 0, 0);
-		//	//glColor3f(color.R, color.G, color.B);
+		//	yOff = (lineHeight - internalSize.Y) / 2.0f / 32.0f;
 
-		//	//top verts
-		//	makeVertex(r * lineWidth, lineOffset+y);
-		//	makeVertex(r * lineWidth + lineWidth, lineOffset+y);
-
-		//	//bottom verts
-		//	makeVertex(r * lineWidth, lineOffset + y+1);
-		//	makeVertex(r * lineWidth + lineWidth, lineOffset + y+1);
-		//	/*makeVertex(r * lineWidth + lineWidth, lineHeight + lineOffset);
-		//	makeVertex(r * lineWidth, lineHeight + lineOffset);*/
-		//	textureY += textureYStep;
-		//	/*if (textureY > 15)
-		//	{
-		//		cout << endl;
-		//	}*/
+		//	lineHeight = internalSize.Y;
 		//}
 
-		//floor
-		//glColor3f(0.2, 0.2, 0.2);
-		//makeVertex(r * lineWidth, lineHeight + lineOffset);
-		//makeVertex(r * lineWidth + lineWidth, lineHeight + lineOffset);
-		//makeVertex(r * lineWidth + lineWidth, internalSize.Y);
-		//makeVertex(r * lineWidth, internalSize.Y);
+		//float lineOffset = ((internalSize.Y - lineHeight) / 2);
 
-		////ceiling
-		//glColor3f(0.4, 0.4, 0.4);
-		//makeVertex(r * lineWidth, 0);
-		//makeVertex(r * lineWidth + lineWidth, 0);
-		//makeVertex(r * lineWidth + lineWidth, lineOffset);
-		//makeVertex(r * lineWidth, lineOffset);
+		////Vector2 mapPos = Vector2((int)(ray.End.X) / map.squareSize, (int)(ray.End.Y) / map.squareSize);
 
-		//glEnd();
+		///*float textureYStep = wallTexture.Size.Y / lineHeight;
+		//float screenY = 0;
+		//float yStep = textureYStep * wallTexture.Size.Y;*/
 
-		//glLineWidth(1);
-		//glColor3f(0, 0, 0);
-		//glBegin(GL_LINES);
+		//
+		//Color color = wallTexture.GetPixel(Vector2(0, yOff));
+		//for (int textY = yOff; textY < wallTexture.Size.Y; textY++)
+		//{
+		//	
+		//	glColor3f(color.R, color.G, color.B);
+		//	//glColor3f(1, 0, 0);
+		//	glBegin(GL_TRIANGLES);
+		//	makeVertex(r * lineWidth, lineOffset + (textY-yOff) * yStep);
+		//	makeVertex(r * lineWidth + lineWidth, lineOffset + (textY - yOff) * yStep);
+		//	makeVertex(r * lineWidth, lineOffset + (textY - yOff) * yStep + yStep);
 
-		////top line
-		//makeVertex(0, 0);
-		//makeVertex(internalSize.X, 0);
 
-		////bottom line
-		//makeVertex(0, internalSize.Y);
-		//makeVertex(internalSize.X, internalSize.Y);
+		//	makeVertex(r * lineWidth, lineOffset + (textY - yOff) * yStep + yStep);
+		//	makeVertex(r * lineWidth + lineWidth, lineOffset + (textY - yOff) * yStep + yStep);
+		//	makeVertex(r * lineWidth + lineWidth, lineOffset + (textY - yOff) * yStep);
+		//	glEnd();
+		//	color = wallTexture.GetPixel(Vector2(0, textY));
+		//}
 
-		////left line
-		//makeVertex(0, 0);
-		//makeVertex(0, internalSize.Y);
+		///*while (screenY < lineHeight + yStep)
+		//{
+		//	glColor3f(1, 0, 0);
 
-		////right line
-		//makeVertex(internalSize.X, 0);
-		//makeVertex(internalSize.X, internalSize.Y);
+		//	makeVertex(r * lineWidth, lineOffset + screenY);
+		//	makeVertex(r * lineWidth + lineWidth, lineOffset + screenY);
 
-		//glEnd();
+		//	makeVertex(r * lineWidth, lineOffset + screenY + yStep);
+		//	makeVertex(r * lineWidth + lineWidth, lineOffset + screenY + yStep);
+
+		//	textureY += textureYStep;
+		//	screenY += yStep;
+		//}
+		//glEnd();*/
+
+		////for (int y = 0; y < lineHeight; y++)
+		////{
+		////	//Color color = wallTexture.GetPixel(Vector2(textureY, 0));
+		////	//walls
+		////	glColor3f(1, 0, 0);
+		////	//glColor3f(color.R, color.G, color.B);
+
+		////	//top verts
+		////	makeVertex(r * lineWidth, lineOffset+y);
+		////	makeVertex(r * lineWidth + lineWidth, lineOffset+y);
+
+		////	//bottom verts
+		////	makeVertex(r * lineWidth, lineOffset + y+1);
+		////	makeVertex(r * lineWidth + lineWidth, lineOffset + y+1);
+		////	/*makeVertex(r * lineWidth + lineWidth, lineHeight + lineOffset);
+		////	makeVertex(r * lineWidth, lineHeight + lineOffset);*/
+		////	textureY += textureYStep;
+		////	/*if (textureY > 15)
+		////	{
+		////		cout << endl;
+		////	}*/
+		////}
+
+		////floor
+		////glColor3f(0.2, 0.2, 0.2);
+		////makeVertex(r * lineWidth, lineHeight + lineOffset);
+		////makeVertex(r * lineWidth + lineWidth, lineHeight + lineOffset);
+		////makeVertex(r * lineWidth + lineWidth, internalSize.Y);
+		////makeVertex(r * lineWidth, internalSize.Y);
+
+		//////ceiling
+		////glColor3f(0.4, 0.4, 0.4);
+		////makeVertex(r * lineWidth, 0);
+		////makeVertex(r * lineWidth + lineWidth, 0);
+		////makeVertex(r * lineWidth + lineWidth, lineOffset);
+		////makeVertex(r * lineWidth, lineOffset);
+
+		////glEnd();
+
+		////glLineWidth(1);
+		////glColor3f(0, 0, 0);
+		////glBegin(GL_LINES);
+
+		//////top line
+		////makeVertex(0, 0);
+		////makeVertex(internalSize.X, 0);
+
+		//////bottom line
+		////makeVertex(0, internalSize.Y);
+		////makeVertex(internalSize.X, internalSize.Y);
+
+		//////left line
+		////makeVertex(0, 0);
+		////makeVertex(0, internalSize.Y);
+
+		//////right line
+		////makeVertex(internalSize.X, 0);
+		////makeVertex(internalSize.X, internalSize.Y);
+
+		////glEnd();
 	}
 }

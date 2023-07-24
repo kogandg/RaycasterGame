@@ -6,13 +6,13 @@ Game::Game()
 	map = new Map();
 
 
-	mapViewPanel = new MapViewPanel(Vector2(0, 0), Vector2(150, 150), Vector2(512, 512));
+	mapViewPanel = new MapViewPanel(Vector2(0, 0), Vector2(512, 512), Vector2(512, 512));
 	playerViewPanel = new PlayerViewPanel(Vector2(0, 0), Vector2(1024, 512), Vector2(640, 320));
 
 	panels = { mapViewPanel, playerViewPanel };
 
 	fov = 60;
-	numRays = 60;
+	numRays = 100;
 	rays = vector<Ray>(numRays);
 }
 
@@ -109,6 +109,7 @@ void Game::calcRays()
 			if (mapIndex >= 0 && mapIndex < map->map.size() && map->map[mapIndex] == 1)//wall
 			{
 				depthOfField = 8;
+				currentRay.HitVertical = false;
 			}
 			else
 			{
@@ -158,6 +159,7 @@ void Game::calcRays()
 			if (mapIndex >= 0 && mapIndex < map->map.size() && map->map[mapIndex] == 1)//wall
 			{
 				depthOfField = 8;
+				currentRay.HitVertical = true;
 			}
 			else
 			{

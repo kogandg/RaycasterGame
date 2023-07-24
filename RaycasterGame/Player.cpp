@@ -44,7 +44,7 @@ void Player::Draw(function<void(Vector2)> makeVertex)// int width, int height)
 
 void Player::update(GLFWwindow* window, function<bool(float, float)> validatePosition)//bool (*validatePosition) (float, float))//Map* map)
 {
-	if (glfwGetKey(window, GLFW_KEY_W) != GLFW_RELEASE && validatePosition(Position.X + delta.X, Position.Y + delta.Y))//map->validPosition(Position.X + delta.X, Position.Y + delta.Y))
+	if (glfwGetKey(window, GLFW_KEY_W) != GLFW_RELEASE && validatePosition(Position.X + delta.X*5, Position.Y + delta.Y*5))//map->validPosition(Position.X + delta.X, Position.Y + delta.Y))
 	{
 		Position += delta;
 	}
@@ -59,7 +59,7 @@ void Player::update(GLFWwindow* window, function<bool(float, float)> validatePos
 		delta.X = cos(Angle) * MovementSpeed;
 		delta.Y = sin(Angle) * MovementSpeed;
 	}
-	if (glfwGetKey(window, GLFW_KEY_S) != GLFW_RELEASE && validatePosition(Position.X - delta.X, Position.Y - delta.Y))//map->validPosition(Position.X - delta.X, Position.Y - delta.Y))
+	if (glfwGetKey(window, GLFW_KEY_S) != GLFW_RELEASE && validatePosition(Position.X - delta.X*5, Position.Y - delta.Y*5))//map->validPosition(Position.X - delta.X, Position.Y - delta.Y))
 	{
 		Position -= delta;
 	}

@@ -57,14 +57,14 @@ bool Texture2D::loadImage(string imagePath)
 
 	const int padding = ((4 - ((int)Size.X * 3) % 4) % 4);
 
-	for (int y = Size.Y - 1; y >= 0; y--)
+	for (int y = 0; y < Size.Y; y++)
 	{
 		for (int x = 0; x < Size.X; x++)
 		{
 			unsigned char color[3];
 			file.read(reinterpret_cast<char*>(color), 3);
 			
-			Pixels[y * Size.X + x] = Color((float)(color[2]) / 255.0f, (float)(color[1]) / 255.0f, (float)(color[0]) / 255.0f);
+			Pixels[(Size.Y - y - 1) * Size.X + x] = Color((float)(color[2]) / 255.0f, (float)(color[1]) / 255.0f, (float)(color[0]) / 255.0f);
 		}
 		file.ignore(padding);
 	}
