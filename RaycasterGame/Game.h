@@ -22,7 +22,7 @@ public:
 	vector<Ray> getRays();
 
 	void Draw(GLFWwindow* window);
-	void Update(GLFWwindow* window);
+	void Update(GLFWwindow* window, float frameTime);
 
 private:
 	Map* map;

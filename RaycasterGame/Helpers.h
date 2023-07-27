@@ -16,4 +16,6 @@ namespace Helpers
 	void normalizeAngle(float &angle);
 
 	int readInt(unsigned char data[], int start);
+
+	bool getKeyState(GLFWwindow* window, int key);
 }

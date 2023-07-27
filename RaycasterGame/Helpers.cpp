@@ -32,4 +32,8 @@ namespace Helpers
 		num = data[start] + (data[start + 1] << 8) + (data[start + 2] << 16) + (data[start + 3] << 24);
 		return num;
 	}
+	bool getKeyState(GLFWwindow* window, int key)
+	{
+		return glfwGetKey(window, key) != GLFW_RELEASE;
+	}
 }

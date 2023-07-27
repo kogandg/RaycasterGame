@@ -11,8 +11,8 @@ Game::Game()
 
 	panels = { mapViewPanel, playerViewPanel };
 
-	fov = 60;
-	numRays = 100;
+	fov = 75;
+	numRays = 200;
 	rays = vector<Ray>(numRays);
 }
 
@@ -42,9 +42,9 @@ void Game::Draw(GLFWwindow* window)
 	//mapViewPanel->Draw(window);
 }
 
-void Game::Update(GLFWwindow* window)
+void Game::Update(GLFWwindow* window, float frameTime)
 {
-	player->update(window, [&](float x, float y) -> bool {return map->validPosition(x, y); });
+	player->update(window, [&](float x, float y) -> bool {return map->validPosition(x, y); }, frameTime);
 	calcRays();
 	mapViewPanel->GetInformation(*player, *map, rays);
 	playerViewPanel->GetInformation(*player, *map, rays);

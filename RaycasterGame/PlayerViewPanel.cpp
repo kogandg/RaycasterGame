@@ -51,27 +51,54 @@ void PlayerViewPanel::drawRays(int width, int height)
 			textureYStartOffSet = 0;
 		}
 
+		float xPerTexturePixel = map.squareSize / wallTexture.Size.X;
 
 		int wallX;
+		int textX;
 		if (ray.HitVertical)
 		{
 			wallX = (int)(ray.End.Y) % map.squareSize;
+			textX = wallX / xPerTexturePixel;
+			if (ray.Angle() > P2 && ray.Angle() < P3)
+			{
+				textX = wallTexture.Size.X - textX - 1;
+			}
 		}
 		else
 		{
 			wallX = (int)(ray.End.X) % map.squareSize;
+			textX = wallX / xPerTexturePixel;
+			if (ray.Angle() < PI)
+			{
+				textX = wallTexture.Size.X - textX - 1;
+			}
 		}
 
-		float xPerTexturePixel = map.squareSize/wallTexture.Size.X;
+		
+		//int textX = wallX / xPerTexturePixel;
+		/*if (ray.Angle() < PI)
+		{
+			int old = textX;
+			textX = wallTexture.Size.X - textX-1;
+			if (textX < 0 || textX >= wallTexture.Size.X)
+			{
+				cout << endl;
+			}
+		}*/
+		/*if (ray.Angle() > P2 && ray.Angle() < P3)
+		{
+			textX = wallTexture.Size.X - textX - 1;
+		}*/
+
 
 		for (int textY = textureYStartOffSet; textY < wallTexture.Size.Y - textureYStartOffSet; textY++)
 		{
 			float yStart = yPerTexturePixel * textY - lineOffsetFromZero;
 			float yEnd = yPerTexturePixel * (textY + 1) - lineOffsetFromZero;
 
-			
+			Vector2 texturePosition = Vector2(textX, textY);
 
-			Color color = wallTexture.GetPixel(Vector2(wallX/xPerTexturePixel, textY));
+			Color color = wallTexture.GetPixel(texturePosition);
 
 			glColor3f(color.R, color.G, color.B);
 
@@ -86,11 +113,6 @@ void PlayerViewPanel::drawRays(int width, int height)
 			makeVertex(r * lineWidth + lineWidth, yStart);
 			glEnd();
 		}
-
-		
-
-
-		cout << endl;
 
 		//oldStuff
 
