@@ -15,6 +15,7 @@ private:
 	Map map;
 	vector<Ray> rays;
 	Texture2D wallTexture;
+	Texture2D bitMap;
 
 	void drawRays(int width, int height);
 	void drawOutline(int width, int height);

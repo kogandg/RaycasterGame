@@ -47,7 +47,7 @@ void Map::draw(function<void(Vector2)> makeVertex)//int windowWidth, int windowH
 			glEnd();
 
 			glLineWidth(1);
-			glColor3f(0.3, 0.3, 0.3);
+			glColor3f(0.3f, 0.3f, 0.3f);
 			glBegin(GL_LINES);
 
 			//top line
@@ -76,29 +76,4 @@ bool Map::validPosition(float xPos, float yPos)
 {
 	Vector2 mapPos = Vector2((int)xPos / squareSize, (int)yPos / squareSize);
 	return map[(mapPos.Y * width) + mapPos.X] == 0;
-
-	/*old
-	int x0;
-	int y0;
-	int x1;
-	int y1;
-	for (int y = 0; y < height; y++)
-	{
-		for (int x = 0; x < width; x++)
-		{
-			if (map[(y * width) + x] == 1)
-			{
-				x0 = x * squareSize;
-				y0 = y * squareSize;
-				x1 = x0 + squareSize;
-				y1 = y0 + squareSize;
-
-				if (x0 <= xPos && x1 >= xPos && y0 <= yPos && y1 >= yPos)
-				{
-					return false;
-				}
-			}
-		}
-	}
-	return true;*/
 }

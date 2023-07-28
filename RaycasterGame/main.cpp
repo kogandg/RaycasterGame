@@ -1,6 +1,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <limits>
+#include <string>
 
 #include "Helpers.h"
 #include "Game.h"
@@ -22,6 +23,8 @@ void init(GLFWwindow* window)
 	glClearColor(0.3, 0.3, 0.3, 0);
 	glfwSetWindowSize(window, windowWidth, windowHeight);
 
+	//glfwWindowHint(GLFW_SAMPLES, 10);
+
 	frame1 = 0;
 	frame2 = 0;
 	frameTime = 0;
@@ -34,7 +37,10 @@ void update(GLFWwindow* window)
 	frame2 = glfwGetTime() * 1000;
 	frameTime = frame2 - frame1;
 	frame1 = glfwGetTime() * 1000;
+	glfwSetWindowTitle(window, to_string(frameTime).c_str());
+
 	game->Update(window, frameTime);
+	
 }
 
 void draw(GLFWwindow* window)
