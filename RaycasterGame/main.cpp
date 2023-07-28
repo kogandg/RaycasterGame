@@ -31,9 +31,9 @@ void init(GLFWwindow* window)
 
 void update(GLFWwindow* window)
 {
-	frame2 = glfwGetTime();
+	frame2 = glfwGetTime() * 1000;
 	frameTime = frame2 - frame1;
-	frame1 = glfwGetTime();
+	frame1 = glfwGetTime() * 1000;
 	game->Update(window, frameTime);
 }
 

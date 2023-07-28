@@ -17,5 +17,6 @@ private:
 	Texture2D wallTexture;
 
 	void drawRays(int width, int height);
+	void drawOutline(int width, int height);
 };
 

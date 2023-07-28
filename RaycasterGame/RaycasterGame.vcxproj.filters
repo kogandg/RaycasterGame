@@ -94,5 +94,8 @@
     <Image Include="bitMap.bmp">
       <Filter>Textures</Filter>
     </Image>
+    <Image Include="greystone.bmp">
+      <Filter>Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

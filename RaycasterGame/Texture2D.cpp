@@ -57,6 +57,9 @@ bool Texture2D::loadImage(string imagePath)
 
 	const int padding = ((4 - ((int)Size.X * 3) % 4) % 4);
 
+	int start = readInt(fileHeader, 10);
+	file.seekg(start, ios::beg);
+
 	for (int y = 0; y < Size.Y; y++)
 	{
 		for (int x = 0; x < Size.X; x++)

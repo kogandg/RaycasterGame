@@ -23,11 +23,9 @@ public:
 	float Angle;
 	
 	Player(Vector2 position = Vector2::Zero(), float movementSpeed = 1.5f, float rotationSpeed = 0.05f);
-	//Player(int x = 0, int y = 0, float movementSpeed = 1.5f, float rotationSpeed = 0.05f);
 
 	void Draw(function<void(Vector2)> makeVertex);//int width, int height);
-	void update(GLFWwindow* window, function<bool(float, float)> validatePosition, float frameTime);//bool (*validatePosition) (float, float));//, Map* map);
-	//void update(GLFWwindow* window, Map* map);
+	void update(GLFWwindow* window, function<bool(float, float)> validatePosition, float frameTime);
 
 	void displayData();
 

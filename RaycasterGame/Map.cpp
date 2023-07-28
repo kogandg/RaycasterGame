@@ -74,6 +74,10 @@ void Map::draw(function<void(Vector2)> makeVertex)//int windowWidth, int windowH
 
 bool Map::validPosition(float xPos, float yPos)
 {
+	Vector2 mapPos = Vector2((int)xPos / squareSize, (int)yPos / squareSize);
+	return map[(mapPos.Y * width) + mapPos.X] == 0;
+
+	/*old
 	int x0;
 	int y0;
 	int x1;
@@ -96,5 +100,5 @@ bool Map::validPosition(float xPos, float yPos)
 			}
 		}
 	}
-	return true;
+	return true;*/
 }

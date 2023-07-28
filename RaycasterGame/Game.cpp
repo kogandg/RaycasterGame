@@ -2,7 +2,7 @@
 
 Game::Game()
 {
-	player = new Player(Vector2(300, 300), 0.75, 0.015);
+	player = new Player(Vector2(300, 300), 0.5, 0.005);
 	map = new Map();
 
 
