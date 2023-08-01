@@ -36,7 +36,7 @@ private:
 	MapViewPanel* mapViewPanel;
 	PlayerViewPanel* playerViewPanel;
 
-	void calcRays();
-	void drawRays();
+	void calcRays(int maxGridDistance = 8);
+	//void drawRays();
 };
 

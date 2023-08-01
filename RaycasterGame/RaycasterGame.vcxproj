@@ -163,6 +163,9 @@
     <Image Include="bitMap.bmp" />
     <Image Include="greystone.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="map.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

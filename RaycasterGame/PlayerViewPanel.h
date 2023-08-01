@@ -17,7 +17,7 @@ private:
 	Texture2D wallTexture;
 	Texture2D bitMap;
 
-	void drawRays(int width, int height);
+	void drawRays(int width, int height, int fov);
 	void drawOutline(int width, int height);
 };
 

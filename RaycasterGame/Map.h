@@ -7,6 +7,7 @@
 #include <functional>
 #include "Helpers.h"
 #include "Vector2.h"
+#include "Texture2D.h"
 
 using namespace std;
 using namespace Helpers;
@@ -19,7 +20,10 @@ public:
 	int height;
 	int squareSize;
 
+	vector<Texture2D> textures;
+
 	Map();
+	Map(string fileName);
 
 	void draw(function<void(Vector2)> makeVertex);//int windowWidth, int windowHeight);
 

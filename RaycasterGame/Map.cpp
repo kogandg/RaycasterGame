@@ -18,6 +18,41 @@ Map::Map()
 	squareSize = 64;
 }
 
+Map::Map(string fileName)
+{
+	squareSize = 64;
+	map = vector<int>();
+	textures = vector<Texture2D>();
+
+	ifstream file;
+	file.open(fileName, ios::in | ios::binary);
+	if (!file.is_open())
+	{
+		cout << "Could not open file " << fileName << endl;
+		return;
+	}
+
+	file >> width;
+	file >> height;
+	map.resize(width * height);
+
+	for (int i = 0; i < map.size(); i++)
+	{
+		file >> map[i];
+	}
+
+	while (!file.eof())
+	{
+		string textureName;
+		file >> textureName;
+
+		Texture2D texture = Texture2D(textureName);
+		textures.push_back(texture);
+	}
+
+	cout << "Done" << endl;
+}
+
 void Map::draw(function<void(Vector2)> makeVertex)//int windowWidth, int windowHeight)
 {
 	//map background : glClearColor(0.3, 0.3, 0.3, 0);
@@ -26,7 +61,7 @@ void Map::draw(function<void(Vector2)> makeVertex)//int windowWidth, int windowH
 	{
 		for (int x = 0; x < width; x++)
 		{
-			if (map[(y * width) + x] == 1)
+			if (map[(y * width) + x] != 0)
 			{
 				glColor3f(1, 1, 1);
 			}

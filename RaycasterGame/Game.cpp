@@ -2,11 +2,11 @@
 
 Game::Game()
 {
-	player = new Player(Vector2(300, 300), 0.5, 0.005);
-	map = new Map();
+	player = new Player(Vector2(64, 64), 0.5, 0.005);
+	map = new Map("map.txt");
 
 
-	mapViewPanel = new MapViewPanel(Vector2(0, 0), Vector2(512, 512), Vector2(512, 512));
+	mapViewPanel = new MapViewPanel(Vector2(0, 0), Vector2(512, 512), Vector2(1024, 1024));
 	playerViewPanel = new PlayerViewPanel(Vector2(0, 0), Vector2(1024, 512), Vector2(640, 320));
 
 	panels = { mapViewPanel, playerViewPanel };
@@ -45,12 +45,12 @@ void Game::Draw(GLFWwindow* window)
 void Game::Update(GLFWwindow* window, float frameTime)
 {
 	player->update(window, [&](float x, float y) -> bool {return map->validPosition(x, y); }, frameTime);
-	calcRays();
+	calcRays(16);
 	mapViewPanel->GetInformation(*player, *map, rays);
 	playerViewPanel->GetInformation(*player, *map, rays);
 }
 
-void Game::calcRays()
+void Game::calcRays(int maxGridDistance)
 {
 	Vector2 mapPos;
 	int mapIndex;
@@ -97,18 +97,18 @@ void Game::calcRays()
 		{
 			currentRay.End = player->Position;
 
-			depthOfField = 8;
+			depthOfField = maxGridDistance;
 		}
 
-		while (depthOfField < 8)
+		while (depthOfField < maxGridDistance)
 		{
 			mapPos.X = (int)(currentRay.End.X) / map->squareSize;
 			mapPos.Y = (int)(currentRay.End.Y) / map->squareSize;
 			mapIndex = mapPos.Y * map->width + mapPos.X;
 
-			if (mapIndex >= 0 && mapIndex < map->map.size() && map->map[mapIndex] == 1)//wall
+			if (mapIndex >= 0 && mapIndex < map->map.size() && map->map[mapIndex] != 0)//wall
 			{
-				depthOfField = 8;
+				depthOfField = maxGridDistance;
 				currentRay.HitVertical = false;
 			}
 			else
@@ -147,18 +147,18 @@ void Game::calcRays()
 		{
 			currentRay.End = player->Position;
 
-			depthOfField = 8;
+			depthOfField = maxGridDistance;
 		}
 
-		while (depthOfField < 8)
+		while (depthOfField < maxGridDistance)
 		{
 			mapPos.X = (int)(currentRay.End.X) / map->squareSize;
 			mapPos.Y = (int)(currentRay.End.Y) / map->squareSize;
 			mapIndex = mapPos.Y * map->width + mapPos.X;
 
-			if (mapIndex >= 0 && mapIndex < map->map.size() && map->map[mapIndex] == 1)//wall
+			if (mapIndex >= 0 && mapIndex < map->map.size() && map->map[mapIndex] != 0)//wall
 			{
-				depthOfField = 8;
+				depthOfField = maxGridDistance;
 				currentRay.HitVertical = true;
 			}
 			else
